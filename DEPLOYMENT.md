@@ -310,6 +310,25 @@ tar -czf /backup/lampiran-$(date +%F).tar.gz \
 
 Simpan backup terenkripsi di lokasi terpisah dan uji restore minimal sebulan sekali.
 
+Script `deploy/backup.sh` sudah menangani database, lampiran privat, `.env`, dan checksum. Script dijalankan cron root setiap pukul 02:00 dan menyimpan hasil di `/var/backups/absensi` dengan retensi 14 hari.
+
+Backup di VM yang sama belum cukup. Salin keluar dari VM, misalnya ke Cloudflare R2, S3, atau disk eksternal. Script mendukung rclone secara opsional:
+
+```bash
+apt-get install -y rclone
+rclone config                      # buat remote, contoh nama: r2
+```
+
+Lalu tambahkan konfigurasi pada cron backup:
+
+```bash
+RCLONE_REMOTE=r2:absensi-backup
+```
+
+Setelah itu jalankan `sudo bash /var/www/absensi-himatif/deploy/backup.sh` dan pastikan file muncul di bucket. R2 free tier memberi 10 GB penyimpanan, 1 juta operasi Class A, 10 juta Class B, dan egress gratis, jadi cukup untuk dump database dan lampiran.
+
+Rollback database hanya boleh dari backup yang sudah diverifikasi, dan jangan pernah menguji restore di database produksi.
+
 ## 8. Rollback
 
 ### Rollback aplikasi
