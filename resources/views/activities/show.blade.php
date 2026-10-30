@@ -174,6 +174,34 @@
                     </div>
                 </form>
             @endif
+
+            @if ($admin && ! $activity->recap_finalized_at && $activity->status !== \App\Enums\ActivityStatus::Completed && $activity->committeeMembers->isNotEmpty())
+                <form method="POST" action="{{ route('activities.committee.update', $activity) }}" class="grid gap-3 border-t border-cream-200 px-4 py-4 sm:grid-cols-3">
+                    @csrf
+                    @method('PUT')
+                    <div class="sm:col-span-1">
+                        <label for="committee_member_id" class="label">Pindahkan panitia</label>
+                        <select id="committee_member_id" name="committee_member_id" class="input" required>
+                            <option value="">Pilih panitia</option>
+                            @foreach ($activity->committeeMembers as $member)
+                                <option value="{{ $member->id }}">{{ $member->user->name }} · {{ $member->position->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <label for="new_committee_position_id" class="label">Jabatan baru</label>
+                        <select id="new_committee_position_id" name="committee_position_id" class="input" required>
+                            <option value="">Pilih jabatan</option>
+                            @foreach ($positions as $position)
+                                <option value="{{ $position->id }}">{{ $position->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="flex items-end">
+                        <button class="btn btn-secondary w-full">Pindahkan</button>
+                    </div>
+                </form>
+            @endif
         </section>
 
         <section class="card">

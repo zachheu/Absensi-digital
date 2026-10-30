@@ -71,7 +71,8 @@ Fitur inti aplikasi sudah diimplementasikan dan diuji secara lokal. Seluruh test
 - Status `draft`, `published`, `ongoing`, `completed`.
 - Form edit hanya dapat mengubah `draft` menjadi `published`.
 - Status `ongoing` ditetapkan saat sesi dibuka; `completed` ditetapkan saat sesi ditutup.
-- Penambahan dan penghapusan panitia per kegiatan.
+- Penambahan, pemindahan jabatan, dan penghapusan panitia per kegiatan.
+- Pemindahan jabatan ditolak bila rekap sudah difinalisasi, kegiatan sudah selesai, atau jabatan tujuan sudah dipegang pengurus yang sama.
 - Satu pengurus boleh memiliki beberapa jabatan pada kegiatan yang sama.
 - Perubahan `start_at`/toleransi ditolak bila sudah ada absensi.
 

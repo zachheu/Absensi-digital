@@ -69,6 +69,7 @@ Route::middleware(['auth', 'active'])->group(function (): void {
         Route::post('/activities/{activity}/finalize', [ActivityController::class, 'finalize'])->name('activities.finalize');
 
         Route::post('/activities/{activity}/committee-members', [CommitteeMemberController::class, 'store'])->name('activities.committee.store');
+        Route::put('/activities/{activity}/committee-members', [CommitteeMemberController::class, 'update'])->name('activities.committee.update');
         Route::delete('/activities/{activity}/committee-members/{committeeMember}', [CommitteeMemberController::class, 'destroy'])->name('activities.committee.destroy');
 
         Route::post('/activities/{activity}/session', [AttendanceSessionController::class, 'open'])->name('activities.session.open');

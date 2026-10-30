@@ -36,6 +36,38 @@ class CommitteeMemberController extends Controller
         return back()->with('status', 'Panitia berhasil ditugaskan.');
     }
 
+    public function update(Request $request, Activity $activity): RedirectResponse
+    {
+        if ($activity->recap_finalized_at !== null) {
+            return back()->withErrors(['committee' => 'Rekap kegiatan sudah difinalisasi. Susunan panitia tidak dapat diubah.']);
+        }
+
+        if ($activity->status === ActivityStatus::Completed) {
+            return back()->withErrors(['committee' => 'Kegiatan sudah selesai. Susunan panitia tidak dapat diubah.']);
+        }
+
+        $validated = $request->validate([
+            'committee_member_id' => ['required', 'integer', 'exists:committee_members,id'],
+            'committee_position_id' => ['required', 'integer', 'exists:committee_positions,id'],
+        ]);
+
+        $committeeMember = $activity->committeeMembers()->findOrFail($validated['committee_member_id']);
+
+        $duplicate = $activity->committeeMembers()
+            ->where('user_id', $committeeMember->user_id)
+            ->where('committee_position_id', $validated['committee_position_id'])
+            ->whereKeyNot($committeeMember->getKey())
+            ->exists();
+
+        if ($duplicate) {
+            return back()->withErrors(['committee' => 'Pengurus ini sudah memiliki jabatan tersebut pada kegiatan ini.']);
+        }
+
+        $committeeMember->update(['committee_position_id' => $validated['committee_position_id']]);
+
+        return back()->with('status', 'Jabatan '.$committeeMember->user->name.' dipindahkan ke '.$committeeMember->position()->value('name').'.');
+    }
+
     public function destroy(Activity $activity, CommitteeMember $committeeMember): RedirectResponse
     {
         if ($committeeMember->activity_id !== $activity->id) {
