@@ -1,0 +1,103 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../views/**/*.blade.php';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-army-50: #f5f6ee;
+    --color-army-100: #e8ecd9;
+    --color-army-200: #d3dab8;
+    --color-army-300: #b3bf8c;
+    --color-army-400: #94a465;
+    --color-army-500: #76884a;
+    --color-army-600: #5b6b37;
+    --color-army-700: #4b5320;
+    --color-army-800: #3d421c;
+    --color-army-900: #2f3514;
+    --color-army-950: #1a1e0b;
+
+    --color-cream-50: #fdfbf5;
+    --color-cream-100: #f8f3e6;
+    --color-cream-200: #f1e8d2;
+    --color-cream-300: #e6d7b5;
+    --color-cream-400: #d7c193;
+    --color-cream-500: #c9ab74;
+
+    --color-ink: #23260f;
+}
+
+@layer base {
+    html {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+        @apply bg-cream-50 text-ink antialiased;
+    }
+}
+
+@layer components {
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-60;
+    }
+
+    .btn-primary {
+        @apply bg-army-700 text-cream-50 hover:bg-army-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-army-700;
+    }
+
+    .btn-secondary {
+        @apply border border-army-200 bg-white text-army-800 hover:bg-army-50;
+    }
+
+    .btn-danger {
+        @apply border border-red-200 bg-white text-red-700 hover:bg-red-50;
+    }
+
+    .card {
+        @apply rounded-xl border border-cream-300 bg-white shadow-sm;
+    }
+
+    .label {
+        @apply mb-1 block text-sm font-medium text-army-900;
+    }
+
+    .input {
+        @apply block w-full rounded-lg border border-cream-300 bg-white px-3 py-2 text-sm text-ink shadow-sm outline-none placeholder:text-army-300 focus:border-army-500 focus:ring-2 focus:ring-army-200;
+    }
+
+    .help {
+        @apply mt-1 text-xs text-army-600;
+    }
+
+    .error {
+        @apply mt-1 text-xs font-medium text-red-600;
+    }
+
+    .table-base {
+        @apply w-full border-collapse text-left text-sm;
+    }
+
+    .table-base thead th {
+        @apply border-b border-cream-300 bg-cream-100 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-army-700;
+    }
+
+    .table-base tbody td {
+        @apply border-b border-cream-200 px-4 py-3 align-middle text-ink;
+    }
+
+    .table-base tbody tr:hover {
+        @apply bg-cream-50;
+    }
+
+    .nav-link {
+        @apply flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-cream-200/80 transition hover:bg-white/10 hover:text-white;
+    }
+
+    .nav-link-active {
+        @apply bg-cream-100 text-army-900 shadow-sm hover:bg-cream-100 hover:text-army-900;
+    }
+}

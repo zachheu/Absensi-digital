@@ -1,0 +1,31 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\AttendanceSession;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends Factory<AttendanceSession>
+ */
+class AttendanceSessionFactory extends Factory
+{
+    /**
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'status' => AttendanceSession::STATUS_OPEN,
+            'opened_at' => now(),
+        ];
+    }
+
+    public function closed(): static
+    {
+        return $this->state(fn (array $attributes): array => [
+            'status' => AttendanceSession::STATUS_CLOSED,
+            'closed_at' => now(),
+        ]);
+    }
+}
