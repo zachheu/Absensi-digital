@@ -8,7 +8,7 @@
         <section class="card xl:col-span-2">
             <div class="border-b border-cream-200 px-4 py-3">
                 <h2 class="text-sm font-semibold text-army-900">Daftar jabatan</h2>
-                <p class="mt-1 text-xs text-army-500">Jabatan kepanitiaan tidak memberikan hak akses aplikasi.</p>
+                <p class="mt-1 text-xs text-army-600">Jabatan kepanitiaan tidak memberikan hak akses aplikasi.</p>
             </div>
 
             <div class="divide-y divide-cream-200">
@@ -18,9 +18,9 @@
                         @method('PUT')
 
                         <div class="sm:col-span-2">
-                            <p class="text-xs font-semibold uppercase tracking-wide text-army-500">Kategori</p>
+                            <p class="text-xs font-semibold uppercase tracking-wide text-army-600">Kategori</p>
                             <p class="mt-1 text-xs text-army-800">{{ $position->category->label() }}</p>
-                            <p class="text-xs text-army-500">{{ $position->committee_members_count }} penugasan</p>
+                            <p class="text-xs text-army-600">{{ $position->committee_members_count }} penugasan</p>
                         </div>
 
                         <div class="sm:col-span-4">
@@ -54,14 +54,14 @@
                         </div>
                     </form>
                 @empty
-                    <p class="px-4 py-6 text-sm text-army-500">Belum ada jabatan kepanitiaan.</p>
+                    <p class="px-4 py-6 text-sm text-army-600">Belum ada jabatan kepanitiaan.</p>
                 @endforelse
             </div>
         </section>
 
         <section class="card h-fit p-4">
             <h2 class="text-sm font-semibold text-army-900">Tambah jabatan</h2>
-            <p class="mt-1 text-xs text-army-500">Gunakan hanya bila kegiatan membutuhkan jabatan baru.</p>
+            <p class="mt-1 text-xs text-army-600">Gunakan hanya bila kegiatan membutuhkan jabatan baru.</p>
 
             <form method="POST" action="{{ route('admin.positions.store') }}" class="mt-3 space-y-3">
                 @csrf

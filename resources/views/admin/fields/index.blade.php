@@ -8,7 +8,7 @@
         <section class="card xl:col-span-2">
             <div class="border-b border-cream-200 px-4 py-3">
                 <h2 class="text-sm font-semibold text-army-900">Daftar bidang</h2>
-                <p class="mt-1 text-xs text-army-500">Bidang bersifat tetap: HRDO, RE, PR, dan CNB.</p>
+                <p class="mt-1 text-xs text-army-600">Bidang bersifat tetap: HRDO, RE, PR, dan CNB.</p>
             </div>
 
             <div class="divide-y divide-cream-200">
@@ -18,9 +18,9 @@
                         @method('PUT')
 
                         <div class="sm:col-span-3">
-                            <p class="text-xs font-semibold uppercase tracking-wide text-army-500">Kode</p>
+                            <p class="text-xs font-semibold uppercase tracking-wide text-army-600">Kode</p>
                             <p class="mt-1 text-sm font-medium text-army-900">{{ $field->code }}</p>
-                            <p class="text-xs text-army-500">{{ $field->users_count }} pengurus</p>
+                            <p class="text-xs text-army-600">{{ $field->users_count }} pengurus</p>
                         </div>
 
                         <div class="sm:col-span-5">
@@ -44,14 +44,14 @@
                         </div>
                     </form>
                 @empty
-                    <p class="px-4 py-6 text-sm text-army-500">Belum ada bidang. Jalankan seeder bidang terlebih dahulu.</p>
+                    <p class="px-4 py-6 text-sm text-army-600">Belum ada bidang. Jalankan seeder bidang terlebih dahulu.</p>
                 @endforelse
             </div>
         </section>
 
         <section class="card h-fit p-4">
             <h2 class="text-sm font-semibold text-army-900">Tambah bidang</h2>
-            <p class="mt-1 text-xs text-army-500">Hanya digunakan bila struktur organisasi berubah.</p>
+            <p class="mt-1 text-xs text-army-600">Hanya digunakan bila struktur organisasi berubah.</p>
 
             <form method="POST" action="{{ route('admin.fields.store') }}" class="mt-3 space-y-3">
                 @csrf

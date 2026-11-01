@@ -39,11 +39,11 @@
                                 <x-status-badge :status="$attendance->status" />
                                 @if ($attendance->is_late) <span class="ml-1 text-[11px] font-medium text-red-600">Terlambat</span> @endif
                             </td>
-                            <td class="text-xs uppercase text-army-500">{{ $attendance->source }}</td>
+                            <td class="text-xs uppercase text-army-600">{{ $attendance->source }}</td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="py-8 text-center text-sm text-army-500">Belum ada riwayat absensi.</td>
+                            <td colspan="5" class="py-8 text-center text-sm text-army-600">Belum ada riwayat absensi.</td>
                         </tr>
                     @endforelse
                 </tbody>

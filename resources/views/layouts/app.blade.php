@@ -51,7 +51,7 @@
                 @endforeach
 
                 @if ($isAdmin)
-                    <p class="px-3 pb-1 pt-5 text-[11px] font-semibold uppercase tracking-widest text-cream-300/50">Administrasi</p>
+                    <p class="px-3 pb-1 pt-5 text-[11px] font-semibold uppercase tracking-widest text-cream-300">Administrasi</p>
                     @foreach ($adminLinks as $link)
                         <a href="{{ route($link['route']) }}"
                            class="nav-link {{ request()->routeIs($link['pattern']) ? 'nav-link-active' : '' }}">
@@ -97,7 +97,7 @@
                 @yield('content')
             </main>
 
-            <footer class="border-t border-cream-300 px-4 py-4 text-xs text-army-500 lg:px-8">
+            <footer class="border-t border-cream-300 px-4 py-4 text-xs text-army-600 lg:px-8">
                 Absensi Digital HIMATIF · Waktu server {{ now()->format('d M Y H:i') }} WIB
             </footer>
         </div>

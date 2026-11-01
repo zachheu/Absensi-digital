@@ -6,27 +6,27 @@
 @section('content')
     <div class="grid gap-4 lg:grid-cols-3">
         <section class="card p-4 lg:col-span-1">
-            <p class="text-xs font-medium uppercase tracking-wide text-army-500">Identitas pengurus</p>
+            <p class="text-xs font-medium uppercase tracking-wide text-army-600">Identitas pengurus</p>
             <p class="mt-2 text-lg font-semibold text-army-900">{{ $user->name }}</p>
             <dl class="mt-3 space-y-2 text-sm">
                 <div class="flex justify-between gap-3">
-                    <dt class="text-army-500">NPP</dt>
+                    <dt class="text-army-600">NPP</dt>
                     <dd class="font-medium text-army-900">{{ $user->npp }}</dd>
                 </div>
                 <div class="flex justify-between gap-3">
-                    <dt class="text-army-500">NPM</dt>
+                    <dt class="text-army-600">NPM</dt>
                     <dd class="font-medium text-army-900">{{ $user->npm }}</dd>
                 </div>
                 <div class="flex justify-between gap-3">
-                    <dt class="text-army-500">Bidang</dt>
+                    <dt class="text-army-600">Bidang</dt>
                     <dd class="font-medium text-army-900">{{ $user->organizationalField?->code ?? '-' }}</dd>
                 </div>
                 <div class="flex justify-between gap-3">
-                    <dt class="text-army-500">Jabatan</dt>
+                    <dt class="text-army-600">Jabatan</dt>
                     <dd class="font-medium text-army-900">{{ $user->structural_position?->label() ?? '-' }}</dd>
                 </div>
                 <div class="flex justify-between gap-3">
-                    <dt class="text-army-500">Status akun</dt>
+                    <dt class="text-army-600">Status akun</dt>
                     <dd><span class="rounded-full bg-army-100 px-2 py-0.5 text-xs font-medium text-army-800">{{ $user->is_active ? 'Aktif' : 'Nonaktif' }}</span></dd>
                 </div>
             </dl>
@@ -50,7 +50,7 @@
                     <a href="{{ route('activities.show', $activity) }}" class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 hover:bg-cream-50">
                         <div class="min-w-0">
                             <p class="truncate text-sm font-medium text-army-900">{{ $activity->name }}</p>
-                            <p class="text-xs text-army-500">{{ $activity->start_at->format('d M Y H:i') }} · {{ $activity->location ?: 'Lokasi belum diisi' }}</p>
+                            <p class="text-xs text-army-600">{{ $activity->start_at->format('d M Y H:i') }} · {{ $activity->location ?: 'Lokasi belum diisi' }}</p>
                         </div>
                         <div class="flex items-center gap-2 text-xs">
                             @if ($attendance)
@@ -58,12 +58,12 @@
                             @elseif ($request)
                                 <x-status-badge :status="$request->status" />
                             @else
-                                <span class="rounded-full border border-cream-300 px-2.5 py-1 text-army-500">Belum absen</span>
+                                <span class="rounded-full border border-cream-300 px-2.5 py-1 text-army-600">Belum absen</span>
                             @endif
                         </div>
                     </a>
                 @empty
-                    <p class="px-4 py-6 text-sm text-army-500">Belum ada kegiatan yang dipublikasikan.</p>
+                    <p class="px-4 py-6 text-sm text-army-600">Belum ada kegiatan yang dipublikasikan.</p>
                 @endforelse
             </div>
         </section>
@@ -80,7 +80,7 @@
                     <div class="flex items-center justify-between gap-3 px-4 py-3">
                         <div class="min-w-0">
                             <p class="truncate text-sm font-medium text-army-900">{{ $attendance->activity->name }}</p>
-                            <p class="text-xs text-army-500">{{ $attendance->activity->start_at->format('d M Y') }}</p>
+                            <p class="text-xs text-army-600">{{ $attendance->activity->start_at->format('d M Y') }}</p>
                         </div>
                         <div class="text-right">
                             <x-status-badge :status="$attendance->status" />
@@ -90,7 +90,7 @@
                         </div>
                     </div>
                 @empty
-                    <p class="px-4 py-6 text-sm text-army-500">Belum ada riwayat absensi.</p>
+                    <p class="px-4 py-6 text-sm text-army-600">Belum ada riwayat absensi.</p>
                 @endforelse
             </div>
         </section>
@@ -105,12 +105,12 @@
                     <div class="flex items-center justify-between gap-3 px-4 py-3">
                         <div class="min-w-0">
                             <p class="truncate text-sm font-medium text-army-900">{{ $permissionRequest->activity->name }}</p>
-                            <p class="text-xs capitalize text-army-500">{{ $permissionRequest->type->label() }} · {{ $permissionRequest->created_at->format('d M Y') }}</p>
+                            <p class="text-xs capitalize text-army-600">{{ $permissionRequest->type->label() }} · {{ $permissionRequest->created_at->format('d M Y') }}</p>
                         </div>
                         <x-status-badge :status="$permissionRequest->status" />
                     </div>
                 @empty
-                    <p class="px-4 py-6 text-sm text-army-500">Belum ada pengajuan.</p>
+                    <p class="px-4 py-6 text-sm text-army-600">Belum ada pengajuan.</p>
                 @endforelse
             </div>
         </section>

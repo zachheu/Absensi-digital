@@ -44,7 +44,7 @@
                         <th>Role</th>
                         <th>Status</th>
                         <th>Login terakhir</th>
-                        <th></th>
+                        <th><span class="sr-only">Aksi</span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,14 +68,14 @@
                                     <form method="POST" action="{{ route('admin.users.status', $user) }}" class="ml-2 inline">
                                         @csrf
                                         @method('PATCH')
-                                        <button class="font-medium text-army-500 hover:text-army-800">{{ $user->is_active ? 'Nonaktifkan' : 'Aktifkan' }}</button>
+                                        <button class="font-medium text-army-600 hover:text-army-800">{{ $user->is_active ? 'Nonaktifkan' : 'Aktifkan' }}</button>
                                     </form>
                                 @endunless
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="9" class="py-8 text-center text-sm text-army-500">Belum ada data pengurus.</td>
+                            <td colspan="9" class="py-8 text-center text-sm text-army-600">Belum ada data pengurus.</td>
                         </tr>
                     @endforelse
                 </tbody>

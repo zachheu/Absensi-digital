@@ -23,7 +23,7 @@
                     <a href="{{ route('activities.show', $activity) }}" class="flex items-center justify-between gap-3 px-4 py-3 hover:bg-cream-50">
                         <div class="min-w-0">
                             <p class="truncate text-sm font-medium text-army-900">{{ $activity->name }}</p>
-                            <p class="text-xs text-army-500">{{ $activity->start_at->format('d M Y H:i') }} · {{ $activity->location ?: 'Lokasi belum diisi' }}</p>
+                            <p class="text-xs text-army-600">{{ $activity->start_at->format('d M Y H:i') }} · {{ $activity->location ?: 'Lokasi belum diisi' }}</p>
                         </div>
                         <div class="text-right text-xs text-army-600">
                             <p>{{ $activity->attendances_count }} absensi</p>
@@ -31,7 +31,7 @@
                         </div>
                     </a>
                 @empty
-                    <p class="px-4 py-6 text-sm text-army-500">Tidak ada kegiatan yang sedang berlangsung.</p>
+                    <p class="px-4 py-6 text-sm text-army-600">Tidak ada kegiatan yang sedang berlangsung.</p>
                 @endforelse
             </div>
         </section>
@@ -46,7 +46,7 @@
                     <div class="flex items-center justify-between gap-3 px-4 py-3">
                         <div class="min-w-0">
                             <p class="truncate text-sm font-medium text-army-900">{{ $attendance->user->name }}</p>
-                            <p class="truncate text-xs text-army-500">{{ $attendance->activity->name }}</p>
+                            <p class="truncate text-xs text-army-600">{{ $attendance->activity->name }}</p>
                         </div>
                         <div class="text-right text-xs text-army-600">
                             <p>{{ $attendance->check_in_at?->format('H:i') ?? '-' }}</p>
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                 @empty
-                    <p class="px-4 py-6 text-sm text-army-500">Belum ada absensi tercatat.</p>
+                    <p class="px-4 py-6 text-sm text-army-600">Belum ada absensi tercatat.</p>
                 @endforelse
             </div>
         </section>
@@ -67,23 +67,23 @@
         <a href="{{ route('activities.create') }}" class="card flex items-center justify-between p-4 hover:border-army-300">
             <div>
                 <p class="text-sm font-medium text-army-900">Buat kegiatan</p>
-                <p class="text-xs text-army-500">Atur jadwal dan toleransi</p>
+                <p class="text-xs text-army-600">Atur jadwal dan toleransi</p>
             </div>
-            <span class="text-army-400">+</span>
+            <span class="text-army-600">+</span>
         </a>
         <a href="{{ route('admin.users.index') }}" class="card flex items-center justify-between p-4 hover:border-army-300">
             <div>
                 <p class="text-sm font-medium text-army-900">Kelola pengurus</p>
-                <p class="text-xs text-army-500">NPP, NPM, dan bidang</p>
+                <p class="text-xs text-army-600">NPP, NPM, dan bidang</p>
             </div>
-            <span class="text-army-400">→</span>
+            <span class="text-army-600">→</span>
         </a>
         <a href="{{ route('admin.audits.index') }}" class="card flex items-center justify-between p-4 hover:border-army-300">
             <div>
                 <p class="text-sm font-medium text-army-900">Audit log</p>
-                <p class="text-xs text-army-500">Riwayat koreksi absensi</p>
+                <p class="text-xs text-army-600">Riwayat koreksi absensi</p>
             </div>
-            <span class="text-army-400">→</span>
+            <span class="text-army-600">→</span>
         </a>
     </div>
 @endsection

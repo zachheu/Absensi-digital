@@ -11,7 +11,7 @@
             <p class="text-xs text-cream-300/70">{{ $activity->start_at->format('d M Y H:i') }} · {{ $activity->location ?: 'Lokasi belum diisi' }}</p>
 
             <div id="qr-container" class="mx-auto mt-6 flex h-72 w-72 items-center justify-center rounded-xl bg-white p-3 [&>svg]:h-full [&>svg]:w-full">
-                <p class="text-sm text-army-500">Memuat QR...</p>
+                <p class="text-sm text-army-600">Memuat QR...</p>
             </div>
 
             <p id="qr-status" class="mt-4 text-sm text-cream-200">Menyiapkan QR Code...</p>
@@ -25,19 +25,19 @@
             <h3 class="text-sm font-semibold text-army-900">Informasi sesi</h3>
             <dl class="mt-3 space-y-2 text-sm">
                 <div class="flex justify-between gap-2">
-                    <dt class="text-army-500">Status sesi</dt>
+                    <dt class="text-army-600">Status sesi</dt>
                     <dd><x-status-badge :status="$session->status" /></dd>
                 </div>
                 <div class="flex justify-between gap-2">
-                    <dt class="text-army-500">Dibuka</dt>
+                    <dt class="text-army-600">Dibuka</dt>
                     <dd class="font-medium">{{ $session->opened_at?->format('d M Y H:i') }}</dd>
                 </div>
                 <div class="flex justify-between gap-2">
-                    <dt class="text-army-500">Toleransi</dt>
+                    <dt class="text-army-600">Toleransi</dt>
                     <dd class="font-medium">{{ $activity->late_tolerance_minutes }} menit</dd>
                 </div>
                 <div class="flex justify-between gap-2">
-                    <dt class="text-army-500">Batas tepat waktu</dt>
+                    <dt class="text-army-600">Batas tepat waktu</dt>
                     <dd class="font-medium">{{ $activity->lateThreshold()->format('d M Y H:i') }}</dd>
                 </div>
             </dl>
@@ -50,7 +50,7 @@
                 </form>
             </div>
 
-            <p class="mt-4 text-xs leading-relaxed text-army-500">
+            <p class="mt-4 text-xs leading-relaxed text-army-600">
                 Tampilkan halaman ini di perangkat admin. Pengurus memindai QR melalui menu Pindai QR pada akun masing-masing.
             </p>
         </section>

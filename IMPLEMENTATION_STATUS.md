@@ -227,20 +227,20 @@ Tidak ada error pada log server saat smoke test.
 
 ## 5. Yang belum dikerjakan
 
-1. **Akun admin awal**: sudah dibuat melalui `AdminUserSeeder` dengan role admin, status aktif, bidang Staff Inti, dan jabatan struktural Sekretaris Umum. Password tersimpan di `.env` dan tidak dicetak di dokumentasi.
-2. **Inisialisasi git dan commit**: repo sudah diinisialisasi lokal; remote dan push belum.
-3. **Deployment**: artefak sudah siap, tetapi belum ada server, domain, database produksi, atau sertifikat.
-4. **CI/CD**: workflow sudah ditulis, tetapi belum berjalan karena repo belum di-push ke GitHub.
-5. **Audit keamanan eksternal**: belum dilakukan.
-6. **Uji beban**: belum dilakukan.
-7. **Uji perangkat nyata**: scanner QR belum diuji di berbagai kamera dan browser ponsel.
-8. **Pratinjau lampiran**: lampiran tersimpan privat dan belum ada endpoint unduh ber-otorisasi.
-9. **Notifikasi**: belum ada email/WhatsApp/push.
-10. **2FA**: belum ada.
-11. **Reset password mandiri**: belum ada.
-12. **Audit data master**: perubahan pengurus/bidang/jabatan/kegiatan belum masuk audit.
-13. **Pembatalan finalisasi**: belum ada.
-14. **Pengujian aksesibilitas**: belum dilakukan secara formal.
+1. **Akun admin awal**: sudah dibuat di server Azure melalui `AdminUserSeeder` (NPP `1.3.3.04.016`, role admin, bidang Staff Inti, jabatan Sekretaris Umum). Password awal ada di `/home/azureuser/admin-awal.txt` (mode 600, milik azureuser) dan wajib diganti.
+2. **Inisialisasi git dan commit**: repo lokal sudah di-commit (6f09c70, c7dca46, beb9794, ed14d73); perubahan kontras/a11y/HSTS/CSP belum di-commit. Remote GitHub dan push masih belum.
+3. **Deployment**: selesai di Azure for Students, region Indonesia Central, VM B2s_v2. URL `https://70.153.84.237.sslip.io`, Let's Encrypt berlaku s.d. 2027-01-30, redirect HTTP->HTTPS, HSTS, CSP, fail2ban, UFW, backup harian jam 02:00 WIB, cron schedule:run tiap menit. Detail di DEPLOYMENT.md.
+4. **CI/CD**: workflow siap di `.github/workflows/`, tetapi belum berjalan karena repo belum di-push dan secrets belum diisi.
+5. **Audit keamanan eksternal**: nikto baseline selesai (temuan: cookie XSRF-TOKEN tanpa HttpOnly by design, header CSP ditambahkan, /api/soap 404 dengan CORS default Laravel). OWASP ZAP tidak tersedia (docker tidak ada); audit pihak ketiga belum dilakukan. Hasil uji otorisasi, throttle, upload, path traversal, TLS, port scan, CSRF, backup/restore tercatat di DEPLOYMENT.md.
+6. **Uji beban**: selesai dengan k6: 1 VU 30s p95 86,9 ms; 5 VU 1m p95 59,1 ms; 10 VU 1m p95 47,7 ms; error 0%; load server 0,33; RAM 7,6 GB bebas.
+7. **Uji perangkat nyata**: belum dilakukan (memerlukan 3 HP nyata dan kamera). Scanner QR sudah terverifikasi via browser headless (token 15 detik, ganda ditolak, kedaluwarsa 22 detik ditolak, sesi tertutup 409).
+8. **Pratinjau lampiran**: belum ada endpoint unduh ber-otorisasi (item opsional, lampiran tetap privat).
+9. **Notifikasi**: belum ada email/WhatsApp/push (item opsional).
+10. **2FA**: belum ada (item opsional).
+11. **Reset password mandiri**: belum ada (item opsional).
+12. **Audit data master**: perubahan pengurus/bidang/jabatan/kegiatan belum masuk audit (item opsional).
+13. **Pembatalan finalisasi**: belum ada (item opsional).
+14. **Pengujian aksesibilitas**: selesai dengan axe-core 4.10.2, 12 halaman (login, dashboard, reports, admin/users, admin/permission-requests, admin/audit-logs, scan, my-attendances, permission-requests, activities, activities/{id}, activities/{id}/qr) dengan 0 violation setelah perbaikan kontras (`text-army-500`→`text-army-600`, `text-army-400`→`text-army-600`), label sidebar (`text-cream-300/50`→`text-cream-300`), `<th></th>`→`<th><span class="sr-only">Aksi</span></th>`, dan `<main>` di halaman login.
 
 ## 6. Keputusan produk
 

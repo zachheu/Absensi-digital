@@ -23,7 +23,7 @@
                         {{ $activity->start_at->format('d M Y H:i') }} s.d. {{ $activity->end_at->format('d M Y H:i') }}
                     </p>
                     <p class="text-sm text-army-600">Toleransi keterlambatan {{ $activity->late_tolerance_minutes }} menit · Batas tepat waktu {{ $activity->lateThreshold()->format('H:i') }}</p>
-                    <p class="mt-1 text-xs text-army-500">Dibuat oleh {{ $activity->creator->name }}</p>
+                    <p class="mt-1 text-xs text-army-600">Dibuat oleh {{ $activity->creator->name }}</p>
                 </div>
 
                 @if ($admin)
@@ -90,7 +90,7 @@
             <h2 class="text-sm font-semibold text-army-900">Ringkasan kehadiran</h2>
             <div class="mt-3 grid grid-cols-2 gap-2 text-sm">
                 <div class="rounded-lg bg-cream-100 p-3">
-                    <p class="text-xs text-army-500">Tercatat</p>
+                    <p class="text-xs text-army-600">Tercatat</p>
                     <p class="text-xl font-semibold text-army-900">{{ $attendanceSummary['total'] }}</p>
                 </div>
                 <div class="rounded-lg bg-army-100 p-3">
@@ -110,7 +110,7 @@
                     <p class="text-xl font-semibold text-army-900">{{ $attendanceSummary['alpa'] }}</p>
                 </div>
                 <div class="rounded-lg bg-cream-100 p-3">
-                    <p class="text-xs text-army-500">Terlambat</p>
+                    <p class="text-xs text-army-600">Terlambat</p>
                     <p class="text-xl font-semibold text-army-900">{{ $attendanceSummary['late'] }}</p>
                 </div>
             </div>
@@ -121,13 +121,13 @@
         <section class="card">
             <div class="flex items-center justify-between border-b border-cream-200 px-4 py-3">
                 <h2 class="text-sm font-semibold text-army-900">Susunan kepanitiaan</h2>
-                <span class="text-xs text-army-500">{{ $activity->committeeMembers->count() }} penugasan</span>
+                <span class="text-xs text-army-600">{{ $activity->committeeMembers->count() }} penugasan</span>
             </div>
 
             <div class="divide-y divide-cream-200">
                 @forelse ($activity->committeeMembers->groupBy('position.name') as $positionName => $members)
                     <div class="px-4 py-3">
-                        <p class="text-xs font-semibold uppercase tracking-wide text-army-500">{{ $positionName }}</p>
+                        <p class="text-xs font-semibold uppercase tracking-wide text-army-600">{{ $positionName }}</p>
                         <div class="mt-2 flex flex-wrap gap-2">
                             @foreach ($members as $member)
                                 <span class="inline-flex items-center gap-2 rounded-full border border-cream-300 bg-cream-50 px-3 py-1 text-xs text-army-800">
@@ -144,7 +144,7 @@
                         </div>
                     </div>
                 @empty
-                    <p class="px-4 py-6 text-sm text-army-500">Belum ada panitia yang ditugaskan.</p>
+                    <p class="px-4 py-6 text-sm text-army-600">Belum ada panitia yang ditugaskan.</p>
                 @endforelse
             </div>
 
@@ -207,7 +207,7 @@
         <section class="card">
             <div class="flex items-center justify-between border-b border-cream-200 px-4 py-3">
                 <h2 class="text-sm font-semibold text-army-900">Absensi</h2>
-                <span class="text-xs text-army-500">{{ $attendances->count() }} catatan</span>
+                <span class="text-xs text-army-600">{{ $attendances->count() }} catatan</span>
             </div>
             <div class="max-h-[28rem] overflow-auto">
                 <table class="table-base">
@@ -216,7 +216,7 @@
                             <th>Pengurus</th>
                             <th>Check-in</th>
                             <th>Status</th>
-                            <th></th>
+                            <th><span class="sr-only">Aksi</span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -224,7 +224,7 @@
                             <tr>
                                 <td>
                                     <p class="font-medium">{{ $attendance->user->name }}</p>
-                                    <p class="text-xs text-army-500">{{ $attendance->user->npp }} · {{ $attendance->user->organizationalField?->code ?? '-' }}</p>
+                                    <p class="text-xs text-army-600">{{ $attendance->user->npp }} · {{ $attendance->user->organizationalField?->code ?? '-' }}</p>
                                 </td>
                                 <td class="text-xs">{{ $attendance->check_in_at?->format('d M Y H:i') ?? '-' }}</td>
                                 <td>
@@ -236,13 +236,13 @@
                                         <a href="{{ route('attendances.correct.edit', $attendance) }}" class="font-medium text-army-700 hover:text-army-900">Koreksi</a>
                                     @endif
                                     @if ($admin)
-                                        <a href="{{ route('admin.audits.attendance', $attendance) }}" class="ml-2 font-medium text-army-500 hover:text-army-800">Audit</a>
+                                        <a href="{{ route('admin.audits.attendance', $attendance) }}" class="ml-2 font-medium text-army-600 hover:text-army-800">Audit</a>
                                     @endif
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="py-6 text-center text-sm text-army-500">Belum ada absensi tercatat.</td>
+                                <td colspan="4" class="py-6 text-center text-sm text-army-600">Belum ada absensi tercatat.</td>
                             </tr>
                         @endforelse
                     </tbody>

@@ -8,7 +8,7 @@
 </head>
 <body class="flex min-h-screen items-center justify-center bg-cream-50 px-4">
     <div class="card max-w-md p-6 text-center">
-        <p class="text-xs font-semibold uppercase tracking-widest text-army-500">403</p>
+        <p class="text-xs font-semibold uppercase tracking-widest text-army-600">403</p>
         <h1 class="mt-2 text-xl font-semibold text-army-900">Akses ditolak</h1>
         <p class="mt-2 text-sm text-army-600">
             {{ $exception->getMessage() ?: 'Kamu tidak memiliki izin untuk membuka halaman ini.' }}

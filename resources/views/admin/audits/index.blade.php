@@ -63,7 +63,7 @@
                             <td class="text-xs font-medium text-army-800">{{ $audit->action }}</td>
                             <td>
                                 <p class="text-sm text-army-900">{{ $audit->user?->name ?? '-' }}</p>
-                                <p class="text-xs text-army-500">{{ $audit->user?->npp ?? '-' }}</p>
+                                <p class="text-xs text-army-600">{{ $audit->user?->npp ?? '-' }}</p>
                             </td>
                             <td class="text-xs">
                                 <a href="{{ route('activities.show', $audit->activity_id) }}" class="font-medium text-army-700 hover:text-army-900">
@@ -72,7 +72,7 @@
                             </td>
                             <td class="max-w-xs text-xs">
                                 @if ($audit->old_values)
-                                    <p class="text-army-500">Sebelum: {{ json_encode($audit->old_values, JSON_UNESCAPED_SLASHES) }}</p>
+                                    <p class="text-army-600">Sebelum: {{ json_encode($audit->old_values, JSON_UNESCAPED_SLASHES) }}</p>
                                 @endif
                                 <p class="text-army-800">Sesudah: {{ json_encode($audit->new_values, JSON_UNESCAPED_SLASHES) }}</p>
                             </td>
@@ -81,14 +81,14 @@
                                 {{ $audit->actor?->name ?? 'Sistem' }}
                                 @if ($audit->attendance)
                                     <p class="mt-1">
-                                        <a href="{{ route('admin.audits.attendance', $audit->attendance_id) }}" class="font-medium text-army-500 hover:text-army-800">Detail</a>
+                                        <a href="{{ route('admin.audits.attendance', $audit->attendance_id) }}" class="font-medium text-army-600 hover:text-army-800">Detail</a>
                                     </p>
                                 @endif
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="py-8 text-center text-sm text-army-500">Belum ada catatan audit.</td>
+                            <td colspan="7" class="py-8 text-center text-sm text-army-600">Belum ada catatan audit.</td>
                         </tr>
                     @endforelse
                 </tbody>

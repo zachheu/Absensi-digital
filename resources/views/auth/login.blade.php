@@ -7,7 +7,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-full bg-army-900">
-    <div class="mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-4 py-10 lg:flex-row lg:items-center lg:gap-16">
+    <main class="mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-4 py-10 lg:flex-row lg:items-center lg:gap-16">
         <div class="mb-8 lg:mb-0 lg:flex-1">
             <div class="flex items-center gap-3">
                 <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-cream-100 text-lg font-bold text-army-800">AH</div>
@@ -78,11 +78,11 @@
                     <button type="submit" class="btn btn-primary w-full">Masuk</button>
                 </form>
 
-                <p class="mt-6 text-center text-xs text-army-500">
+                <p class="mt-6 text-center text-xs text-army-600">
                     Lupa password? Hubungi admin HIMATIF untuk pengaturan ulang.
                 </p>
             </div>
         </div>
-    </div>
+    </main>
 </body>
 </html>

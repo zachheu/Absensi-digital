@@ -2,7 +2,7 @@
 
 ## 1. Status
 
-Dokumen ini adalah panduan deployment. Aplikasi saat ini **belum dideploy** ke server produksi. Database produksi belum dibuat dan repo git belum diinisialisasi pada lingkungan pengembangan ini.
+Dokumen ini adalah panduan deployment. Aplikasi **sudah dideploy** ke server produksi pada 2026-11-01: URL `https://70.153.84.237.sslip.io` (Azure for Students, region Indonesia Central, VM `absensi-himatif`, Ubuntu 24.04, 2 vCPU, 8 GB RAM, 29 GB disk). Let's Encrypt berlaku s.d. 2027-01-30 dengan auto-renew. Detail hasil uji (keamanan, aksesibilitas, beban, fungsional) ada di bagian 12.
 
 ## 2. Prasyarat server
 
@@ -435,3 +435,32 @@ Panduan pengujian setelah deploy ada di `deploy/TESTING.md`, mencakup smoke test
 - Jangan menaruh `.env` di dalam document root.
 - Jangan menonaktifkan CSRF atau validasi server untuk "mempercepat" absensi.
 - Aplikasi ini belum melalui audit keamanan eksternal; lakukan review sebelum go-live.
+
+## 13. Hasil verifikasi deployment (2026-11-01)
+
+### 13.1 HTTPS dan header
+- HTTP 301 ke HTTPS. HSTS `max-age=31536000`, X-Frame-Options SAMEORIGIN, X-Content-Type-Options nosniff, Referrer-Policy strict-origin-when-cross-origin, Permissions-Policy `camera=(self)`, CSP `default-src 'self'; script-src 'self' 'unsafe-inline'; ...`, cookie `secure; httponly; samesite=lax`.
+- TLS 1.0/1.1 ditolak, TLS 1.2/1.3 didukung. Sertifikat Let's Encrypt valid s.d. 2027-01-30, auto-renew dry-run lolos.
+- `/.env` 403, `/storage/app/private/...` 404, `/up` 200, POST tanpa CSRF 419.
+
+### 13.2 Fungsional end-to-end
+- Login admin (NPP + password) sukses; pengurus 403 di `/admin/*`, `/reports`, `/attendance-sessions/{id}/token`, `/activities/{id}/qr`, `/attendances/{id}/koreksi`.
+- Buat kegiatan, tambah/pindah panitia, buka sesi, QR 15 detik, scan sukses, scan ganda ditolak, token kedaluwarsa setelah 22 detik ditolak, sesi tertutup → token endpoint 409 & scan ditolak.
+- Pengajuan izin → setujui → masuk rekap. Koreksi absensi + audit tercatat. Tutup sesi → kegiatan `completed`. Finalisasi rekap menetapkan alpa 1.
+- Ekspor Excel 6,6 KB valid (header + data), PDF 868 KB valid (1 halaman, isi benar). Upload lampiran 3 MB ditolak "Ukuran lampiran maksimal 2 MB", tidak ada file tersimpan.
+
+### 13.3 Throttle dan otorisasi
+- Login throttle 5/menit → 429 pada percobaan ke-6. Scan throttle 12/menit → 429 pada percobaan ke-13.
+- Port eksternal: 22, 80, 443 terbuka; 3306, 8080 tertutup.
+
+### 13.4 Backup dan restore
+- Backup manual sukses (database + storage + checksum). Restore ke DB sementara `absensi_restore_cek` berhasil (users=3, activities=1, attendances=3, izin=1, audits=2) lalu DB dihapus. Cron backup 02:00 WIB, retensi 14 hari.
+
+### 13.5 Beban (k6)
+- 1 VU 30s: p95 86,9 ms. 5 VU 1m: p95 59,1 ms. 10 VU 1m: p95 47,7 ms. Error 0%. Load server 0,33, RAM 7,6 GB bebas.
+
+### 13.6 Aksesibilitas (axe-core 4.10.2)
+- 12 halaman: 0 violation setelah perbaikan kontras (`text-army-500`→`text-army-600`, `text-army-400`→`text-army-600`), label sidebar (`text-cream-300/50`→`text-cream-300`), `<th></th>`→`<th><span class="sr-only">Aksi</span></th>`, dan `<main>` di halaman login.
+
+### 13.7 Nikto
+- Temuan: cookie XSRF-TOKEN tanpa HttpOnly (by design, double-submit CSRF), header CSP sebelumnya hilang (sudah ditambahkan), `/api/soap/?wsdl=1` 404 dengan CORS default Laravel (`Access-Control-Allow-Origin: *` pada path `api/*`; tidak ada route API). Tidak ada kerentanan kritis.

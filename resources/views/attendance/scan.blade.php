@@ -28,10 +28,10 @@
                 @forelse ($activeActivities as $activity)
                     <div class="rounded-lg border border-cream-300 bg-cream-50 p-3">
                         <p class="text-sm font-medium text-army-900">{{ $activity->name }}</p>
-                        <p class="text-xs text-army-500">{{ $activity->start_at->format('d M Y H:i') }} · {{ $activity->location ?: 'Lokasi belum diisi' }}</p>
+                        <p class="text-xs text-army-600">{{ $activity->start_at->format('d M Y H:i') }} · {{ $activity->location ?: 'Lokasi belum diisi' }}</p>
                     </div>
                 @empty
-                    <p class="text-sm text-army-500">Belum ada sesi absensi yang terbuka.</p>
+                    <p class="text-sm text-army-600">Belum ada sesi absensi yang terbuka.</p>
                 @endforelse
             </div>
             <div class="mt-4 rounded-lg bg-cream-100 p-3 text-xs leading-relaxed text-army-600">

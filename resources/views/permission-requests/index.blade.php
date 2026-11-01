@@ -34,7 +34,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="py-8 text-center text-sm text-army-500">Belum ada pengajuan izin atau sakit.</td>
+                            <td colspan="6" class="py-8 text-center text-sm text-army-600">Belum ada pengajuan izin atau sakit.</td>
                         </tr>
                     @endforelse
                 </tbody>

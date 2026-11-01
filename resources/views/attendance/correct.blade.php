@@ -67,11 +67,11 @@
                 @forelse ($audits as $audit)
                     <div class="px-4 py-3 text-xs">
                         <p class="font-medium text-army-900">{{ $audit->action }}</p>
-                        <p class="text-army-500">{{ $audit->actor?->name ?? 'Sistem' }} · {{ $audit->created_at?->format('d M Y H:i') }}</p>
+                        <p class="text-army-600">{{ $audit->actor?->name ?? 'Sistem' }} · {{ $audit->created_at?->format('d M Y H:i') }}</p>
                         <p class="mt-1 text-army-600">{{ $audit->reason }}</p>
                     </div>
                 @empty
-                    <p class="px-4 py-6 text-xs text-army-500">Belum ada audit untuk absensi ini.</p>
+                    <p class="px-4 py-6 text-xs text-army-600">Belum ada audit untuk absensi ini.</p>
                 @endforelse
             </div>
         </section>

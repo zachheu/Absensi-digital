@@ -34,7 +34,7 @@
                         <th>Status</th>
                         <th>Panitia</th>
                         <th>Absensi</th>
-                        <th></th>
+                        <th><span class="sr-only">Aksi</span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,7 +42,7 @@
                         <tr>
                             <td>
                                 <p class="font-medium text-army-900">{{ $activity->name }}</p>
-                                <p class="text-xs text-army-500">{{ $activity->location ?: 'Lokasi belum diisi' }}</p>
+                                <p class="text-xs text-army-600">{{ $activity->location ?: 'Lokasi belum diisi' }}</p>
                             </td>
                             <td class="text-xs text-army-600">
                                 {{ $activity->start_at->format('d M Y H:i') }}
@@ -57,7 +57,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="py-8 text-center text-sm text-army-500">Belum ada kegiatan.</td>
+                            <td colspan="6" class="py-8 text-center text-sm text-army-600">Belum ada kegiatan.</td>
                         </tr>
                     @endforelse
                 </tbody>

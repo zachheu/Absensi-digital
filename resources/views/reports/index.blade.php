@@ -120,12 +120,12 @@
                         <tr>
                             <td>
                                 <p class="font-medium text-army-900">{{ $attendance->user->name }}</p>
-                                <p class="text-xs text-army-500">{{ $attendance->user->npp }} · {{ $attendance->user->npm }}</p>
+                                <p class="text-xs text-army-600">{{ $attendance->user->npp }} · {{ $attendance->user->npm }}</p>
                             </td>
                             <td class="text-xs">{{ $attendance->user->organizationalField?->code ?? '-' }}</td>
                             <td>
                                 <p class="text-sm text-army-900">{{ $attendance->activity->name }}</p>
-                                <p class="text-xs text-army-500">{{ $attendance->activity->start_at->format('d M Y H:i') }}</p>
+                                <p class="text-xs text-army-600">{{ $attendance->activity->start_at->format('d M Y H:i') }}</p>
                             </td>
                             <td class="text-xs">
                                 {{ $attendance->user->committeeMembers->where('activity_id', $attendance->activity_id)->pluck('position.name')->filter()->implode(', ') ?: '-' }}
@@ -137,11 +137,11 @@
                                     <span class="ml-1 text-[11px] font-medium text-red-600">Terlambat</span>
                                 @endif
                             </td>
-                            <td class="text-xs uppercase text-army-500">{{ $attendance->source }}</td>
+                            <td class="text-xs uppercase text-army-600">{{ $attendance->source }}</td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="py-8 text-center text-sm text-army-500">Tidak ada data absensi sesuai filter.</td>
+                            <td colspan="7" class="py-8 text-center text-sm text-army-600">Tidak ada data absensi sesuai filter.</td>
                         </tr>
                     @endforelse
                 </tbody>
