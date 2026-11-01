@@ -23,7 +23,7 @@
                 </div>
                 <div class="flex justify-between gap-3">
                     <dt class="text-army-600">Jabatan</dt>
-                    <dd class="font-medium text-army-900">{{ $user->structural_position?->label() ?? '-' }}</dd>
+                    <dd class="font-medium text-army-900">{{ $user->structural_position?->label() ?? 'Staff' }}</dd>
                 </div>
                 <div class="flex justify-between gap-3">
                     <dt class="text-army-600">Tipe pengurus</dt>

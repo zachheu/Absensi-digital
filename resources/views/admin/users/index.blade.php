@@ -55,7 +55,7 @@
                             <td class="text-xs">{{ $user->npp }}</td>
                             <td class="text-xs">{{ $user->npm }}</td>
                             <td>{{ $user->organizationalField?->code ?? '-' }}</td>
-                            <td>{{ $user->structural_position?->label() ?? '-' }}</td>
+                            <td>{{ $user->structural_position?->label() ?? 'Staff' }}</td>
                             <td class="text-xs">{{ $user->membership_type?->label() ?? '-' }}</td>
                             <td>{{ $user->role->label() }}</td>
                             <td>
