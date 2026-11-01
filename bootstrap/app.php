@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureUserCanManageAttendance;
 use App\Http\Middleware\EnsureUserIsActive;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use Illuminate\Foundation\Application;
@@ -17,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => EnsureUserIsAdmin::class,
             'active' => EnsureUserIsActive::class,
+            'attendance.manage' => EnsureUserCanManageAttendance::class,
         ]);
 
         $middleware->redirectGuestsTo(fn () => route('login'));

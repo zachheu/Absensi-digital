@@ -85,7 +85,7 @@ class SeederTest extends TestCase
 
         $this->assertSame(5, OrganizationalField::query()->count());
         $this->assertSame(12, CommitteePosition::query()->count());
-        $this->assertSame(1, Permission::query()->count());
+        $this->assertSame(2, Permission::query()->count());
     }
 
     public function test_admin_seeder_skips_creation_when_environment_is_incomplete(): void

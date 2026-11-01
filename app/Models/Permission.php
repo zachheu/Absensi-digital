@@ -10,6 +10,7 @@ class Permission extends Model
     use HasFactory;
 
     public const ATTENDANCE_CORRECT = 'attendance.correct';
+    public const ATTENDANCE_MANAGE = 'attendance.manage';
 
     /**
      * @var list<string>

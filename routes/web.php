@@ -31,7 +31,7 @@ Route::middleware(['auth', 'active'])->group(function (): void {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/activities', [ActivityController::class, 'index'])->name('activities.index');
-    Route::get('/activities/create', [ActivityController::class, 'create'])->middleware('admin')->name('activities.create');
+    Route::get('/activities/create', [ActivityController::class, 'create'])->middleware('attendance.manage')->name('activities.create');
     Route::get('/activities/{activity}', [ActivityController::class, 'show'])->name('activities.show');
 
     Route::get('/scan', [ScanController::class, 'index'])->name('scan.index');
@@ -63,6 +63,19 @@ Route::middleware(['auth', 'active'])->group(function (): void {
         Route::post('/admin/positions', [CommitteePositionController::class, 'store'])->name('admin.positions.store');
         Route::put('/admin/positions/{committeePosition}', [CommitteePositionController::class, 'update'])->name('admin.positions.update');
 
+        Route::get('/admin/permission-requests', [PermissionRequestReviewController::class, 'index'])->name('admin.permission-requests.index');
+        Route::post('/admin/permission-requests/{permissionRequest}/approve', [PermissionRequestReviewController::class, 'approve'])->name('admin.permission-requests.approve');
+        Route::post('/admin/permission-requests/{permissionRequest}/reject', [PermissionRequestReviewController::class, 'reject'])->name('admin.permission-requests.reject');
+
+        Route::get('/admin/audit-logs', [AuditLogController::class, 'index'])->name('admin.audits.index');
+        Route::get('/attendances/{attendance}/audit', [AuditLogController::class, 'forAttendance'])->name('admin.audits.attendance');
+
+        Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+        Route::get('/reports/export/excel', [ReportController::class, 'excel'])->name('reports.excel');
+        Route::get('/reports/export/pdf', [ReportController::class, 'pdf'])->name('reports.pdf');
+    });
+
+    Route::middleware('attendance.manage')->group(function (): void {
         Route::post('/activities', [ActivityController::class, 'store'])->name('activities.store');
         Route::get('/activities/{activity}/edit', [ActivityController::class, 'edit'])->name('activities.edit');
         Route::put('/activities/{activity}', [ActivityController::class, 'update'])->name('activities.update');
@@ -76,16 +89,5 @@ Route::middleware(['auth', 'active'])->group(function (): void {
         Route::post('/activities/{activity}/session/close', [AttendanceSessionController::class, 'close'])->name('activities.session.close');
         Route::get('/activities/{activity}/qr', [AttendanceSessionController::class, 'show'])->name('activities.qr');
         Route::get('/attendance-sessions/{session}/token', [AttendanceSessionController::class, 'token'])->name('attendance-sessions.token');
-
-        Route::get('/admin/permission-requests', [PermissionRequestReviewController::class, 'index'])->name('admin.permission-requests.index');
-        Route::post('/admin/permission-requests/{permissionRequest}/approve', [PermissionRequestReviewController::class, 'approve'])->name('admin.permission-requests.approve');
-        Route::post('/admin/permission-requests/{permissionRequest}/reject', [PermissionRequestReviewController::class, 'reject'])->name('admin.permission-requests.reject');
-
-        Route::get('/admin/audit-logs', [AuditLogController::class, 'index'])->name('admin.audits.index');
-        Route::get('/attendances/{attendance}/audit', [AuditLogController::class, 'forAttendance'])->name('admin.audits.attendance');
-
-        Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
-        Route::get('/reports/export/excel', [ReportController::class, 'excel'])->name('reports.excel');
-        Route::get('/reports/export/pdf', [ReportController::class, 'pdf'])->name('reports.pdf');
     });
 });
