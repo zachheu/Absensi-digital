@@ -177,7 +177,7 @@
                         <div class="grid gap-1 sm:grid-cols-2">
                             @foreach ($candidateUsers as $candidate)
                                 <label class="flex items-center gap-2 rounded-lg px-2 py-1 text-xs text-army-800 hover:bg-cream-100">
-                                    <input type="checkbox" name="user_ids[]" value="{{ $candidate->id }}" class="h-4 w-4 rounded border-cream-400 text-army-700 focus:ring-army-300">
+                                    <input type="checkbox" name="user_ids[]" value="{{ $candidate->id }}" data-name="{{ $candidate->name }} · {{ $candidate->organizationalField?->code ?? '-' }}" class="h-4 w-4 rounded border-cream-400 text-army-700 focus:ring-army-300 js-candidate">
                                     {{ $candidate->name }} · {{ $candidate->organizationalField?->code ?? '-' }}
                                 </label>
                             @endforeach
@@ -187,6 +187,31 @@
                         <button class="btn btn-primary">Tugaskan sekaligus</button>
                     </div>
                 </form>
+                <script>
+                    (function () {
+                        const checkboxes = document.querySelectorAll('.js-candidate');
+                        const headSelect = document.getElementById('head_user_id');
+                        if (!headSelect) return;
+                        const placeholder = headSelect.querySelector('option[value=""]');
+                        function rebuild() {
+                            const selected = headSelect.value;
+                            const checked = Array.from(checkboxes).filter(c => c.checked);
+                            headSelect.innerHTML = '';
+                            if (placeholder) headSelect.appendChild(placeholder.cloneNode(true));
+                            checked.forEach(c => {
+                                const opt = document.createElement('option');
+                                opt.value = c.value;
+                                opt.textContent = c.dataset.name;
+                                if (c.value === selected) opt.selected = true;
+                                headSelect.appendChild(opt);
+                            });
+                            if (checked.length === 0) {
+                                headSelect.value = '';
+                            }
+                        }
+                        checkboxes.forEach(c => c.addEventListener('change', rebuild));
+                    })();
+                </script>
             @endif
 
             @if ($admin && ! $activity->recap_finalized_at && $activity->status !== \App\Enums\ActivityStatus::Completed && $activity->committeeMembers->isNotEmpty())

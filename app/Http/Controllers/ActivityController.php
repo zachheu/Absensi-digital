@@ -113,6 +113,7 @@ class ActivityController extends Controller
             'candidateUsers' => $user->isAdmin()
                 ? User::query()
                     ->where('is_active', true)
+                    ->whereNotIn('id', $assignedUserIds)
                     ->with('organizationalField')
                     ->orderBy('name')
                     ->get()
