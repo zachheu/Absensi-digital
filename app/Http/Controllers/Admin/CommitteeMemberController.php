@@ -18,22 +18,56 @@ class CommitteeMemberController extends Controller
         }
 
         $validated = $request->validate([
-            'user_id' => ['required', 'exists:users,id'],
             'committee_position_id' => ['required', 'exists:committee_positions,id'],
+            'user_ids' => ['required', 'array', 'min:1'],
+            'user_ids.*' => ['integer', 'exists:users,id'],
+            'head_user_id' => ['nullable', 'integer', 'exists:users,id'],
         ]);
 
-        $exists = $activity->committeeMembers()
-            ->where('user_id', $validated['user_id'])
-            ->where('committee_position_id', $validated['committee_position_id'])
-            ->exists();
-
-        if ($exists) {
-            return back()->withErrors(['committee' => 'Penugasan yang sama sudah tercatat untuk kegiatan ini.']);
+        if ($validated['head_user_id'] !== null && ! in_array((int) $validated['head_user_id'], array_map('intval', $validated['user_ids']), true)) {
+            return back()->withErrors(['committee' => 'Kepala Divisi harus termasuk dalam daftar pengurus yang dipilih.'])->withInput();
         }
 
-        $activity->committeeMembers()->create($validated);
+        $created = 0;
+        $skipped = 0;
 
-        return back()->with('status', 'Panitia berhasil ditugaskan.');
+        foreach ($validated['user_ids'] as $userId) {
+            $exists = $activity->committeeMembers()
+                ->where('user_id', $userId)
+                ->where('committee_position_id', $validated['committee_position_id'])
+                ->exists();
+
+            if ($exists) {
+                $skipped++;
+                continue;
+            }
+
+            $activity->committeeMembers()->create([
+                'user_id' => $userId,
+                'committee_position_id' => $validated['committee_position_id'],
+                'is_head' => (int) $userId === (int) ($validated['head_user_id'] ?? 0),
+            ]);
+            $created++;
+        }
+
+        // Pastikan flag kepala konsisten untuk jabatan ini.
+        $activity->committeeMembers()
+            ->where('committee_position_id', $validated['committee_position_id'])
+            ->update(['is_head' => false]);
+
+        if ($validated['head_user_id'] !== null) {
+            $activity->committeeMembers()
+                ->where('committee_position_id', $validated['committee_position_id'])
+                ->where('user_id', $validated['head_user_id'])
+                ->update(['is_head' => true]);
+        }
+
+        $message = $created.' pengurus ditugaskan.';
+        if ($skipped > 0) {
+            $message .= ' '.$skipped.' sudah tercatat sebelumnya dan dilewati.';
+        }
+
+        return back()->with('status', $message);
     }
 
     public function update(Request $request, Activity $activity): RedirectResponse

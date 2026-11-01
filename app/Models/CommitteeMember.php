@@ -17,7 +17,15 @@ class CommitteeMember extends Model
         'activity_id',
         'user_id',
         'committee_position_id',
+        'is_head',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'is_head' => 'boolean',
+        ];
+    }
 
     public function activity(): BelongsTo
     {

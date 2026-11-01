@@ -131,6 +131,7 @@
                         <div class="mt-2 flex flex-wrap gap-2">
                             @foreach ($members as $member)
                                 <span class="inline-flex items-center gap-2 rounded-full border border-cream-300 bg-cream-50 px-3 py-1 text-xs text-army-800">
+                                    @if ($member->is_head)<span class="rounded bg-army-700 px-1.5 py-0.5 text-[10px] font-semibold text-cream-50">Kadiv</span>@endif
                                     {{ $member->user->name }} ({{ $member->user->organizationalField?->code ?? '-' }})
                                     @if ($admin && $activity->status !== \App\Enums\ActivityStatus::Completed)
                                         <form method="POST" action="{{ route('activities.committee.destroy', [$activity, $member]) }}" onsubmit="return confirm('Hapus penugasan ini?')">
@@ -149,28 +150,41 @@
             </div>
 
             @if ($admin && ! $activity->recap_finalized_at)
-                <form method="POST" action="{{ route('activities.committee.store', $activity) }}" class="grid gap-3 border-t border-cream-200 px-4 py-4 sm:grid-cols-3">
+                <form method="POST" action="{{ route('activities.committee.store', $activity) }}" class="space-y-3 border-t border-cream-200 px-4 py-4">
                     @csrf
-                    <div class="sm:col-span-1">
-                        <label for="user_id" class="label">Pengurus</label>
-                        <select id="user_id" name="user_id" class="input" required>
-                            <option value="">Pilih pengurus</option>
+                    <div class="grid gap-3 sm:grid-cols-2">
+                        <div>
+                            <label for="committee_position_id" class="label">Jabatan (divisi)</label>
+                            <select id="committee_position_id" name="committee_position_id" class="input" required>
+                                <option value="">Pilih jabatan</option>
+                                @foreach ($positions as $position)
+                                    <option value="{{ $position->id }}">{{ $position->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label for="head_user_id" class="label">Kepala Divisi (Kadiv)</label>
+                            <select id="head_user_id" name="head_user_id" class="input">
+                                <option value="">Tanpa Kadiv</option>
+                                @foreach ($candidateUsers as $candidate)
+                                    <option value="{{ $candidate->id }}">{{ $candidate->name }} · {{ $candidate->organizationalField?->code ?? '-' }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="label mb-2">Pilih pengurus (bisa lebih dari satu)</p>
+                        <div class="grid gap-1 sm:grid-cols-2">
                             @foreach ($candidateUsers as $candidate)
-                                <option value="{{ $candidate->id }}">{{ $candidate->name }} · {{ $candidate->organizationalField?->code ?? '-' }}</option>
+                                <label class="flex items-center gap-2 rounded-lg px-2 py-1 text-xs text-army-800 hover:bg-cream-100">
+                                    <input type="checkbox" name="user_ids[]" value="{{ $candidate->id }}" class="h-4 w-4 rounded border-cream-400 text-army-700 focus:ring-army-300">
+                                    {{ $candidate->name }} · {{ $candidate->organizationalField?->code ?? '-' }}
+                                </label>
                             @endforeach
-                        </select>
+                        </div>
                     </div>
-                    <div class="sm:col-span-1">
-                        <label for="committee_position_id" class="label">Jabatan</label>
-                        <select id="committee_position_id" name="committee_position_id" class="input" required>
-                            <option value="">Pilih jabatan</option>
-                            @foreach ($positions as $position)
-                                <option value="{{ $position->id }}">{{ $position->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="flex items-end">
-                        <button class="btn btn-primary w-full">Tugaskan</button>
+                    <div class="flex justify-end">
+                        <button class="btn btn-primary">Tugaskan sekaligus</button>
                     </div>
                 </form>
             @endif
