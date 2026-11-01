@@ -35,7 +35,7 @@
 
         <aside data-sidebar class="fixed inset-y-0 left-0 z-40 flex w-72 -translate-x-full flex-col bg-army-900 transition-transform duration-200 lg:static lg:translate-x-0">
             <div class="flex items-center gap-3 px-5 py-5">
-                <img src="{{ asset('images/logo-himatif-hitam-putih.jpg') }}" alt="Logo HIMATIF" class="h-10 w-10 rounded-lg bg-cream-100 object-contain">
+                <img src="{{ asset('images/logo-himatif-hitam-putih.jpg') }}" alt="Logo HIMATIF" class="h-20 w-20 rounded-xl bg-cream-100 object-cover">
                 <div>
                     <p class="text-sm font-semibold text-cream-50">Absensi HIMATIF</p>
                     <p class="text-xs text-cream-300/70">Sistem Kehadiran Pengurus</p>
