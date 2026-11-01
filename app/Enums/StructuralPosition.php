@@ -8,6 +8,7 @@ enum StructuralPosition: string
     case WakilWalikota = 'wakil_walikota';
     case SekretarisUmum = 'sekretaris_umum';
     case BendaharaUmum = 'bendahara_umum';
+    case KepalaBidang = 'kepala_bidang';
 
     public function label(): string
     {
@@ -16,6 +17,7 @@ enum StructuralPosition: string
             self::WakilWalikota => 'Wakil Walikota Himpunan',
             self::SekretarisUmum => 'Sekretaris Umum',
             self::BendaharaUmum => 'Bendahara Umum',
+            self::KepalaBidang => 'Kepala Bidang',
         };
     }
 }

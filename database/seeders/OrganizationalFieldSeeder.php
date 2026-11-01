@@ -14,12 +14,15 @@ class OrganizationalFieldSeeder extends Seeder
      */
     public function run(): void
     {
+        // Migrasi kode lama (underscore) ke format dengan spasi.
+        OrganizationalField::query()->where('code', 'STAFF_INTI')->update(['code' => 'STAFF INTI']);
+
         $fields = [
             ['code' => 'HRDO', 'name' => 'HRDO'],
             ['code' => 'RE', 'name' => 'RE'],
             ['code' => 'PR', 'name' => 'PR'],
             ['code' => 'CNB', 'name' => 'CNB'],
-            ['code' => 'STAFF_INTI', 'name' => 'Staff Inti', 'description' => 'Unit pimpinan himpunan'],
+            ['code' => 'STAFF INTI', 'name' => 'Staff Inti', 'description' => 'Unit pimpinan himpunan'],
         ];
 
         foreach ($fields as $field) {

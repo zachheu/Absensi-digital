@@ -48,11 +48,11 @@ class SeederTest extends TestCase
 
         $this->assertSame(5, OrganizationalField::query()->count());
         $this->assertSame(
-            ['CNB', 'HRDO', 'PR', 'RE', 'STAFF_INTI'],
+            ['CNB', 'HRDO', 'PR', 'RE', 'STAFF INTI'],
             OrganizationalField::query()->orderBy('code')->pluck('code')->all(),
         );
 
-        $staffInti = OrganizationalField::query()->where('code', 'STAFF_INTI')->firstOrFail();
+        $staffInti = OrganizationalField::query()->where('code', 'STAFF INTI')->firstOrFail();
         $this->assertSame('Staff Inti', $staffInti->name);
         $this->assertSame('Unit pimpinan himpunan', $staffInti->description);
     }
@@ -126,13 +126,13 @@ class SeederTest extends TestCase
     {
         $this->seed(OrganizationalFieldSeeder::class);
         $this->setAdminEnv('password-awal');
-        $this->setEnv('HIMATIF_ADMIN_FIELD', 'STAFF_INTI');
+        $this->setEnv('HIMATIF_ADMIN_FIELD', 'STAFF INTI');
 
         $this->seed(AdminUserSeeder::class);
 
         $admin = User::query()->where('npp', '1987654321')->firstOrFail();
 
-        $this->assertSame('STAFF_INTI', $admin->organizationalField?->code);
+        $this->assertSame('STAFF INTI', $admin->organizationalField?->code);
     }
 
     public function test_admin_seeder_assigns_configured_structural_position(): void
