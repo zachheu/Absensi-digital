@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\PengurusMembership;
 use App\Enums\StructuralPosition;
 use App\Enums\UserRole;
 use Database\Factories\UserFactory;
@@ -29,6 +30,7 @@ class User extends Authenticatable
         'role',
         'organizational_field_id',
         'structural_position',
+        'membership_type',
         'is_active',
         'last_login_at',
     ];
@@ -50,6 +52,7 @@ class User extends Authenticatable
             'password' => 'hashed',
             'role' => UserRole::class,
             'structural_position' => StructuralPosition::class,
+            'membership_type' => PengurusMembership::class,
             'is_active' => 'boolean',
             'last_login_at' => 'datetime',
         ];

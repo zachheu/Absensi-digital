@@ -60,6 +60,17 @@
         </div>
 
         <div>
+            <label for="membership_type" class="label">Tipe pengurus (opsional)</label>
+            <select id="membership_type" name="membership_type" class="input">
+                <option value="">Tidak ada</option>
+                @foreach ($membershipTypes as $type)
+                    <option value="{{ $type->value }}" @selected(old('membership_type', $user->membership_type?->value) === $type->value)>{{ $type->label() }}</option>
+                @endforeach
+            </select>
+            @error('membership_type') <p class="error">{{ $message }}</p> @enderror
+        </div>
+
+        <div>
             <label for="role" class="label">Role aplikasi</label>
             <select id="role" name="role" class="input" required>
                 @foreach ($roles as $role)

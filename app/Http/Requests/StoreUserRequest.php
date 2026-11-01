@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\PengurusMembership;
 use App\Enums\StructuralPosition;
 use App\Enums\UserRole;
 use Illuminate\Foundation\Http\FormRequest;
@@ -28,6 +29,7 @@ class StoreUserRequest extends FormRequest
             'password' => ['required', 'string', 'min:8', Password::defaults()],
             'organizational_field_id' => ['required', 'exists:organizational_fields,id'],
             'structural_position' => ['nullable', Rule::enum(StructuralPosition::class)],
+            'membership_type' => ['nullable', Rule::enum(PengurusMembership::class)],
             'role' => ['required', Rule::enum(UserRole::class)],
             'is_active' => ['sometimes', 'boolean'],
         ];

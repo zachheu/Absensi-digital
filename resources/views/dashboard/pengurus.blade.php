@@ -26,6 +26,10 @@
                     <dd class="font-medium text-army-900">{{ $user->structural_position?->label() ?? '-' }}</dd>
                 </div>
                 <div class="flex justify-between gap-3">
+                    <dt class="text-army-600">Tipe pengurus</dt>
+                    <dd class="font-medium text-army-900">{{ $user->membership_type?->label() ?? '-' }}</dd>
+                </div>
+                <div class="flex justify-between gap-3">
                     <dt class="text-army-600">Status akun</dt>
                     <dd><span class="rounded-full bg-army-100 px-2 py-0.5 text-xs font-medium text-army-800">{{ $user->is_active ? 'Aktif' : 'Nonaktif' }}</span></dd>
                 </div>

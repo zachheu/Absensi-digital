@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\PengurusMembership;
 use App\Enums\StructuralPosition;
 use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
@@ -48,6 +49,7 @@ class UserController extends Controller
             'fields' => OrganizationalField::query()->where('is_active', true)->orderBy('code')->get(),
             'roles' => UserRole::cases(),
             'structuralPositions' => StructuralPosition::cases(),
+            'membershipTypes' => PengurusMembership::cases(),
         ]);
     }
 
@@ -70,6 +72,7 @@ class UserController extends Controller
             'fields' => OrganizationalField::query()->orderBy('code')->get(),
             'roles' => UserRole::cases(),
             'structuralPositions' => StructuralPosition::cases(),
+            'membershipTypes' => PengurusMembership::cases(),
             'permissions' => Permission::query()->orderBy('name')->get(),
         ]);
     }

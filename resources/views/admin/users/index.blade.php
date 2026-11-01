@@ -41,6 +41,7 @@
                         <th>NPM</th>
                         <th>Bidang</th>
                         <th>Jabatan</th>
+                        <th>Tipe pengurus</th>
                         <th>Role</th>
                         <th>Status</th>
                         <th>Login terakhir</th>
@@ -55,6 +56,7 @@
                             <td class="text-xs">{{ $user->npm }}</td>
                             <td>{{ $user->organizationalField?->code ?? '-' }}</td>
                             <td>{{ $user->structural_position?->label() ?? '-' }}</td>
+                            <td class="text-xs">{{ $user->membership_type?->label() ?? '-' }}</td>
                             <td>{{ $user->role->label() }}</td>
                             <td>
                                 <span class="rounded-full px-2 py-0.5 text-xs font-medium {{ $user->is_active ? 'bg-army-100 text-army-800' : 'bg-red-50 text-red-700' }}">
