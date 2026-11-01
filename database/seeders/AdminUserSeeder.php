@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Enums\PengurusMembership;
 use App\Enums\StructuralPosition;
 use App\Enums\UserRole;
 use App\Models\OrganizationalField;
@@ -49,7 +48,7 @@ class AdminUserSeeder extends Seeder
 
         if ($structuralPosition !== null) {
             $user->structural_position = $structuralPosition;
-            $user->membership_type = PengurusMembership::Staff;
+            $user->membership_type = null;
         }
 
         if (! $user->exists || filled(env('HIMATIF_ADMIN_RESET_PASSWORD'))) {
