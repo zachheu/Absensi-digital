@@ -10,7 +10,7 @@
     <main class="mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-4 py-10 lg:flex-row lg:items-center lg:gap-16">
         <div class="mb-8 lg:mb-0 lg:flex-1">
             <div class="flex items-center gap-3">
-                <img src="{{ asset('images/logo-himatif-hitam-putih.jpg') }}" alt="Logo HIMATIF" class="h-12 w-12 rounded-xl bg-cream-100 object-contain p-1">
+                <img src="{{ asset('images/logo-himatif-hitam-putih.jpg') }}" alt="Logo HIMATIF" class="h-20 w-20 rounded-xl bg-cream-100 object-contain p-1">
                 <div>
                     <p class="text-lg font-semibold text-cream-50">Absensi HIMATIF</p>
                     <p class="text-sm text-cream-300/70">Sistem kehadiran pengurus</p>
