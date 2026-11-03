@@ -24,7 +24,9 @@ class CommitteeMemberController extends Controller
             'head_user_id' => ['nullable', 'integer', 'exists:users,id'],
         ]);
 
-        if ($validated['head_user_id'] !== null && ! in_array((int) $validated['head_user_id'], array_map('intval', $validated['user_ids']), true)) {
+        $headUserId = $validated['head_user_id'] ?? null;
+
+        if ($headUserId !== null && ! in_array((int) $headUserId, array_map('intval', $validated['user_ids']), true)) {
             return back()->withErrors(['committee' => 'Kepala Divisi harus termasuk dalam daftar pengurus yang dipilih.'])->withInput();
         }
 
@@ -39,13 +41,14 @@ class CommitteeMemberController extends Controller
 
             if ($exists) {
                 $skipped++;
+
                 continue;
             }
 
             $activity->committeeMembers()->create([
                 'user_id' => $userId,
                 'committee_position_id' => $validated['committee_position_id'],
-                'is_head' => (int) $userId === (int) ($validated['head_user_id'] ?? 0),
+                'is_head' => (int) $userId === (int) ($headUserId ?? 0),
             ]);
             $created++;
         }
@@ -55,10 +58,10 @@ class CommitteeMemberController extends Controller
             ->where('committee_position_id', $validated['committee_position_id'])
             ->update(['is_head' => false]);
 
-        if ($validated['head_user_id'] !== null) {
+        if ($headUserId !== null) {
             $activity->committeeMembers()
                 ->where('committee_position_id', $validated['committee_position_id'])
-                ->where('user_id', $validated['head_user_id'])
+                ->where('user_id', $headUserId)
                 ->update(['is_head' => true]);
         }
 
