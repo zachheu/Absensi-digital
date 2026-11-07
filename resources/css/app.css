@@ -45,7 +45,22 @@
     }
 
     body {
-        @apply bg-cream-50 text-ink antialiased;
+        @apply bg-gradient-to-br from-cream-50 via-cream-100/60 to-cream-50 text-ink antialiased;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+    }
+
+    :focus-visible {
+        @apply outline-2 outline-offset-2 outline-accent-500;
     }
 }
 
@@ -83,7 +98,11 @@
     }
 
     .input {
-        @apply block w-full rounded-lg border border-cream-300 bg-white px-3 py-2 text-sm text-ink shadow-sm outline-none placeholder:text-army-300 focus:border-army-500 focus:ring-2 focus:ring-army-200;
+        @apply block w-full rounded-lg border border-cream-300 bg-white px-3 py-2 text-sm text-ink shadow-sm outline-none placeholder:text-army-300 transition-colors focus:border-accent-500 focus:ring-2 focus:ring-accent-200;
+    }
+
+    .card-glass {
+        @apply rounded-xl border border-white/40 bg-white/70 shadow-lg backdrop-blur-md;
     }
 
     .help {
