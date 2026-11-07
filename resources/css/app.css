@@ -43,23 +43,23 @@
 
 @layer components {
     .btn {
-        @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-60;
+        @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-150 ease-out disabled:cursor-not-allowed disabled:opacity-60 active:scale-[0.97];
     }
 
     .btn-primary {
-        @apply bg-army-700 text-cream-50 hover:bg-army-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-army-700;
+        @apply bg-army-700 text-cream-50 shadow-sm hover:bg-army-800 hover:shadow-md hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-army-700 active:translate-y-0 active:shadow-sm;
     }
 
     .btn-secondary {
-        @apply border border-army-200 bg-white text-army-800 hover:bg-army-50;
+        @apply border border-army-200 bg-white text-army-800 hover:bg-army-50 hover:border-army-300 hover:-translate-y-0.5 active:translate-y-0;
     }
 
     .btn-danger {
-        @apply border border-red-200 bg-white text-red-700 hover:bg-red-50;
+        @apply border border-red-200 bg-white text-red-700 hover:bg-red-50 active:scale-[0.97];
     }
 
     .card {
-        @apply rounded-xl border border-cream-300 bg-white shadow-sm;
+        @apply rounded-xl border border-cream-300 bg-white shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5;
     }
 
     .label {
@@ -67,7 +67,7 @@
     }
 
     .input {
-        @apply block w-full rounded-lg border border-cream-300 bg-white px-3 py-2 text-sm text-ink shadow-sm outline-none placeholder:text-army-300 focus:border-army-500 focus:ring-2 focus:ring-army-200;
+        @apply block w-full rounded-lg border border-cream-300 bg-white px-3 py-2 text-sm text-ink shadow-sm outline-none placeholder:text-army-300 transition-colors duration-150 focus:border-army-500 focus:ring-2 focus:ring-army-200;
     }
 
     .help {
