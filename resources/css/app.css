@@ -5,7 +5,7 @@
 @source '../views/**/*.blade.php';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 
     --color-army-50: #f5f6ee;
@@ -37,6 +37,7 @@
 
     body {
         @apply bg-cream-50 text-ink antialiased;
+        font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     }
 }
 
