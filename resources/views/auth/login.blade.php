@@ -6,7 +6,7 @@
     <title>Masuk · Absensi HIMATIF</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-full bg-army-900">
+<body class="min-h-full bg-gradient-to-br from-army-900 via-army-950 to-army-800">
     <main class="mx-auto flex min-h-screen max-w-6xl flex-col justify-center px-4 py-10 lg:flex-row lg:items-center lg:gap-16">
         <div class="mb-8 lg:mb-0 lg:flex-1">
             <div class="flex items-center gap-3">
@@ -25,7 +25,7 @@
         </div>
 
         <div class="w-full lg:max-w-md">
-            <div class="rounded-2xl bg-cream-50 p-6 shadow-xl sm:p-8">
+            <div class="rounded-2xl bg-cream-50/95 p-6 shadow-2xl backdrop-blur sm:p-8">
                 <h2 class="text-xl font-semibold text-army-900">Masuk ke aplikasi</h2>
                 <p class="mt-1 text-sm text-army-600">Gunakan NPP dan password akun pengurus.</p>
 
