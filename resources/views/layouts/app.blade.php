@@ -80,6 +80,7 @@
                         <path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
                     </svg>
                 </button>
+                <img src="{{ asset('images/logo-himatif.png') }}" alt="Logo HIMATIF" class="h-8 w-8 object-contain">
                 <div class="min-w-0">
                     <h1 class="truncate text-base font-semibold text-army-900 lg:text-lg">@yield('title', 'Dashboard')</h1>
                     @hasSection('subtitle')
