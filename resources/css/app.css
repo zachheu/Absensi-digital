@@ -27,15 +27,6 @@
     --color-cream-400: #d7c193;
     --color-cream-500: #c9ab74;
 
-    --color-accent-50: #f5f3ff;
-    --color-accent-100: #ede9fe;
-    --color-accent-200: #ddd6fe;
-    --color-accent-300: #c4b5fd;
-    --color-accent-400: #a78bfa;
-    --color-accent-500: #8b5cf6;
-    --color-accent-600: #7c3aed;
-    --color-accent-700: #6d28d9;
-
     --color-ink: #23260f;
 }
 
@@ -45,56 +36,29 @@
     }
 
     body {
-        @apply bg-gradient-to-br from-cream-50 via-cream-100/60 to-cream-50 text-ink antialiased;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        *,
-        *::before,
-        *::after {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.01ms !important;
-            scroll-behavior: auto !important;
-        }
-    }
-
-    :focus-visible {
-        @apply outline-2 outline-offset-2 outline-accent-500;
+        @apply bg-cream-50 text-ink antialiased;
     }
 }
 
 @layer components {
     .btn {
-        @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-60;
+        @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-60;
     }
 
     .btn-primary {
-        @apply bg-gradient-to-br from-army-700 to-army-800 text-cream-50 shadow-md shadow-black/20 hover:from-army-800 hover:to-army-900 hover:shadow-lg hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-army-700 active:translate-y-0;
+        @apply bg-army-700 text-cream-50 hover:bg-army-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-army-700;
     }
 
     .btn-secondary {
-        @apply border border-army-200 bg-gradient-to-br from-white to-cream-50 text-army-800 shadow-sm hover:from-cream-50 hover:to-cream-100 hover:border-army-300;
+        @apply border border-army-200 bg-white text-army-800 hover:bg-army-50;
     }
 
     .btn-danger {
         @apply border border-red-200 bg-white text-red-700 hover:bg-red-50;
     }
 
-    .btn-accent {
-        @apply bg-gradient-to-br from-accent-500 to-accent-600 text-white shadow-md shadow-black/20 hover:from-accent-600 hover:to-accent-700 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0;
-    }
-
     .card {
-        @apply rounded-xl border border-cream-300 bg-white shadow-sm transition-all duration-200 hover:shadow-lg hover:border-accent-300/60 hover:-translate-y-0.5;
-    }
-
-    .card-glow {
-        @apply rounded-xl border border-cream-300 bg-gradient-to-br from-white via-cream-50 to-accent-50/40 shadow-md;
-    }
-
-    .card-accent {
-        @apply rounded-xl border border-accent-200 bg-gradient-to-br from-white to-accent-50 shadow-sm;
+        @apply rounded-xl border border-cream-300 bg-white shadow-sm;
     }
 
     .label {
@@ -102,11 +66,7 @@
     }
 
     .input {
-        @apply block w-full rounded-lg border border-cream-300 bg-white px-3 py-2 text-sm text-ink shadow-sm outline-none placeholder:text-army-300 transition-colors focus:border-accent-500 focus:ring-2 focus:ring-accent-200;
-    }
-
-    .card-glass {
-        @apply rounded-xl border border-white/40 bg-white/70 shadow-lg backdrop-blur-md;
+        @apply block w-full rounded-lg border border-cream-300 bg-white px-3 py-2 text-sm text-ink shadow-sm outline-none placeholder:text-army-300 focus:border-army-500 focus:ring-2 focus:ring-army-200;
     }
 
     .help {
@@ -122,7 +82,7 @@
     }
 
     .table-base thead th {
-        @apply border-b border-cream-300 bg-gradient-to-br from-cream-100 to-cream-200 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-army-700;
+        @apply border-b border-cream-300 bg-cream-100 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-army-700;
     }
 
     .table-base tbody td {
@@ -130,14 +90,14 @@
     }
 
     .table-base tbody tr:hover {
-        @apply bg-cream-50/80;
+        @apply bg-cream-50;
     }
 
     .nav-link {
-        @apply flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-cream-200/80 transition-all duration-200 hover:bg-white/10 hover:text-white hover:translate-x-0.5;
+        @apply flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-cream-200/80 transition hover:bg-white/10 hover:text-white;
     }
 
     .nav-link-active {
-        @apply bg-gradient-to-r from-cream-100 to-cream-200 text-army-900 shadow-sm hover:from-cream-100 hover:to-cream-200 hover:text-army-900;
+        @apply bg-cream-100 text-army-900 shadow-sm hover:bg-cream-100 hover:text-army-900;
     }
 }
