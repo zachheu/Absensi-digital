@@ -16,8 +16,8 @@
                     <p class="text-sm text-cream-300/70">Sistem kehadiran pengurus</p>
                 </div>
             </div>
-            <h1 class="mt-8 max-w-md text-3xl font-semibold leading-tight text-cream-50 lg:text-4xl">
-                Himpunan Mahasiswa Teknik Informatika
+            <h1 class="mt-8 max-w-md text-3xl font-semibold leading-tight lg:text-4xl">
+                <span class="bg-gradient-to-r from-cream-50 via-accent-300 to-cream-200 bg-clip-text text-transparent">Himpunan Mahasiswa Teknik Informatika</span>
             </h1>
             <p class="mt-3 max-w-md text-xl font-medium leading-relaxed text-cream-300/80">
                 Connect Your Mind

@@ -86,7 +86,11 @@
     }
 
     .card {
-        @apply rounded-xl border border-cream-300 bg-white shadow-sm transition-all duration-200 hover:shadow-md;
+        @apply rounded-xl border border-cream-300 bg-white shadow-sm transition-all duration-200 hover:shadow-lg hover:border-accent-300/60 hover:-translate-y-0.5;
+    }
+
+    .card-glow {
+        @apply rounded-xl border border-cream-300 bg-gradient-to-br from-white via-cream-50 to-accent-50/40 shadow-md;
     }
 
     .card-accent {
