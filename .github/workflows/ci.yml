@@ -101,19 +101,25 @@ jobs:
           npm run build
 
       - name: Setup SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
           mkdir -p ~/.ssh
-          if [ -z "${{ secrets.SSH_PRIVATE_KEY }}" ]; then
+          if [ -z "$SSH_PRIVATE_KEY" ]; then
             echo "SSH_PRIVATE_KEY is empty"; exit 1
           fi
-          printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           echo "key file lines: $(wc -l < ~/.ssh/deploy_key)"
-          echo "key file bytes: $(wc -c < ~/.ssh/deploy_key)"
-          ssh-keyscan -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null || true
+          ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
           echo "SSH key configured"
 
       - name: Sync code to server
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
           rsync -az --delete \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
@@ -124,13 +130,17 @@ jobs:
             --exclude='vendor/' \
             --exclude='.git/' \
             --exclude='tests/' \
-            ./ "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}/"
+            ./ "$SSH_USER@$SSH_HOST:$DEPLOY_PATH/"
 
       - name: Run migrations and optimize
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
           ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
-            "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" \
-            "cd ${{ secrets.DEPLOY_PATH }} && composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction && php artisan migrate --force && php artisan optimize && sudo systemctl reload php8.3-fpm"
+            "$SSH_USER@$SSH_HOST" \
+            "cd $DEPLOY_PATH && composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction && php artisan migrate --force && php artisan optimize && sudo systemctl reload php8.3-fpm"
 
       - name: Cleanup
         run: rm -f ~/.ssh/deploy_key
