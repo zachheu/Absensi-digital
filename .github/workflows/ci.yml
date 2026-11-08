@@ -100,17 +100,10 @@ jobs:
           npm ci
           npm run build
 
-      - name: Setup SSH
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-        run: |
-          mkdir -p ~/.ssh
-          echo "KEY_LEN=${#SSH_PRIVATE_KEY}"
-          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-          ls -l ~/.ssh/deploy_key
-          cat ~/.ssh/deploy_key | head -1
+      - name: Setup SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Sync code to server
         env:
@@ -118,8 +111,9 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
+          ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
           rsync -az --delete \
-            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no" \
+            -e "ssh -o StrictHostKeyChecking=no" \
             --exclude='.env' \
             --exclude='.env.*' \
             --exclude='storage/' \
@@ -135,9 +129,5 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
-          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=no \
-            "$SSH_USER@$SSH_HOST" \
+          ssh -o StrictHostKeyChecking=no "$SSH_USER@$SSH_HOST" \
             "cd $DEPLOY_PATH && composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction && php artisan migrate --force && php artisan optimize && sudo systemctl reload php8.3-fpm"
-
-      - name: Cleanup
-        run: rm -f ~/.ssh/deploy_key
