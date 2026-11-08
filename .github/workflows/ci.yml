@@ -108,6 +108,8 @@ jobs:
           fi
           printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
+          echo "key file lines: $(wc -l < ~/.ssh/deploy_key)"
+          echo "key file bytes: $(wc -c < ~/.ssh/deploy_key)"
           ssh-keyscan -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null || true
           echo "SSH key configured"
 
