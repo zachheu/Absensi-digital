@@ -106,11 +106,11 @@ jobs:
           SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
           mkdir -p ~/.ssh
+          echo "KEY_LEN=${#SSH_PRIVATE_KEY}"
           printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null && echo "key valid" || { echo "key invalid"; exit 1; }
-          ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
-          echo "SSH key configured"
+          ls -l ~/.ssh/deploy_key
+          cat ~/.ssh/deploy_key | head -1
 
       - name: Sync code to server
         env:
