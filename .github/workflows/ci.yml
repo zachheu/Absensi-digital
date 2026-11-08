@@ -106,12 +106,9 @@ jobs:
           SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
           mkdir -p ~/.ssh
-          if [ -z "$SSH_PRIVATE_KEY" ]; then
-            echo "SSH_PRIVATE_KEY is empty"; exit 1
-          fi
           printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          echo "key file lines: $(wc -l < ~/.ssh/deploy_key)"
+          ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null && echo "key valid" || { echo "key invalid"; exit 1; }
           ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
           echo "SSH key configured"
 
