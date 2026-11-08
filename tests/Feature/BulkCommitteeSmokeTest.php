@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Activity;
+use App\Models\CommitteeMember;
 use App\Models\CommitteePosition;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -33,7 +34,7 @@ class BulkCommitteeSmokeTest extends TestCase
             'user_id' => $users->first()->id,
             'is_head' => true,
         ]);
-        $this->assertSame(1, \App\Models\CommitteeMember::where('activity_id', $activity->id)->where('is_head', true)->count());
+        $this->assertSame(1, CommitteeMember::where('activity_id', $activity->id)->where('is_head', true)->count());
     }
 
     public function test_bulk_rejects_head_not_in_list(): void
