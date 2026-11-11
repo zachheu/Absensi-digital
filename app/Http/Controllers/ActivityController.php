@@ -53,6 +53,10 @@ class ActivityController extends Controller
                 'late_tolerance_minutes' => 15,
                 'status' => ActivityStatus::Draft,
             ]),
+            'sourceActivities' => Activity::query()
+                ->whereHas('committeeMembers')
+                ->orderByDesc('start_at')
+                ->get(['id', 'name', 'start_at']),
         ]);
     }
 
@@ -63,6 +67,21 @@ class ActivityController extends Controller
             'status' => $request->input('status', ActivityStatus::Draft->value),
             'created_by' => $request->user()->id,
         ]);
+
+        if ($request->filled('copy_committee_from')) {
+            $source = Activity::query()->find($request->integer('copy_committee_from'));
+            if ($source !== null) {
+                foreach ($source->committeeMembers as $member) {
+                    $activity->committeeMembers()->firstOrCreate(
+                        [
+                            'user_id' => $member->user_id,
+                            'committee_position_id' => $member->committee_position_id,
+                        ],
+                        ['is_head' => $member->is_head]
+                    );
+                }
+            }
+        }
 
         return redirect()
             ->route('activities.show', $activity)

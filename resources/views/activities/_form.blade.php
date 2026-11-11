@@ -69,6 +69,19 @@
         </div>
     </div>
 
+    @if (! $isEdit && isset($sourceActivities) && $sourceActivities->isNotEmpty())
+        <div>
+            <label for="copy_committee_from" class="label">Salin panitia dari kegiatan (opsional)</label>
+            <select id="copy_committee_from" name="copy_committee_from" class="input">
+                <option value="">Tidak menyalin</option>
+                @foreach ($sourceActivities as $source)
+                    <option value="{{ $source->id }}">{{ $source->name }} ({{ $source->start_at?->format('d M Y') }})</option>
+                @endforeach
+            </select>
+            <p class="help">Panitia dan jabatannya akan disalin ke kegiatan baru.</p>
+        </div>
+    @endif
+
     <div class="flex flex-wrap gap-2">
         <button type="submit" class="btn btn-primary">{{ $isEdit ? 'Simpan perubahan' : 'Buat kegiatan' }}</button>
         <a href="{{ $isEdit ? route('activities.show', $activity) : route('activities.index') }}" class="btn btn-secondary">Batal</a>

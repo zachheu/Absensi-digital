@@ -24,6 +24,7 @@ class StoreActivityRequest extends FormRequest
             'end_at' => ['required', 'date', 'after:start_at'],
             'late_tolerance_minutes' => ['required', 'integer', 'min:0', 'max:240'],
             'status' => ['sometimes', 'in:draft,published'],
+            'copy_committee_from' => ['nullable', 'integer', 'exists:activities,id'],
         ];
     }
 
