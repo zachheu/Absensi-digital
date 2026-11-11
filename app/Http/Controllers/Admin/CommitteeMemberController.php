@@ -105,6 +105,50 @@ class CommitteeMemberController extends Controller
         return back()->with('status', 'Jabatan '.$committeeMember->user->name.' dipindahkan ke '.$committeeMember->position()->value('name').'.');
     }
 
+    public function updateHead(Request $request, Activity $activity): RedirectResponse
+    {
+        if ($activity->recap_finalized_at !== null) {
+            return back()->withErrors(['committee' => 'Rekap kegiatan sudah difinalisasi. Susunan panitia tidak dapat diubah.']);
+        }
+
+        if ($activity->status === ActivityStatus::Completed) {
+            return back()->withErrors(['committee' => 'Kegiatan sudah selesai. Susunan panitia tidak dapat diubah.']);
+        }
+
+        $validated = $request->validate([
+            'committee_position_id' => ['required', 'integer', 'exists:committee_positions,id'],
+            'head_user_id' => ['nullable', 'integer', 'exists:users,id'],
+        ]);
+
+        $positionId = (int) $validated['committee_position_id'];
+        $headUserId = $validated['head_user_id'] ?? null;
+
+        // Hanya anggota yang sudah tercatat pada jabatan ini yang boleh jadi Kadiv.
+        if ($headUserId !== null) {
+            $isMember = $activity->committeeMembers()
+                ->where('committee_position_id', $positionId)
+                ->where('user_id', $headUserId)
+                ->exists();
+
+            if (! $isMember) {
+                return back()->withErrors(['committee' => 'Kepala Divisi harus salah satu anggota jabatan tersebut.'])->withInput();
+            }
+        }
+
+        $activity->committeeMembers()
+            ->where('committee_position_id', $positionId)
+            ->update(['is_head' => false]);
+
+        if ($headUserId !== null) {
+            $activity->committeeMembers()
+                ->where('committee_position_id', $positionId)
+                ->where('user_id', $headUserId)
+                ->update(['is_head' => true]);
+        }
+
+        return back()->with('status', 'Kepala Divisi diperbarui.');
+    }
+
     public function destroy(Activity $activity, CommitteeMember $committeeMember): RedirectResponse
     {
         if ($committeeMember->activity_id !== $activity->id) {

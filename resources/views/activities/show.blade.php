@@ -214,6 +214,69 @@
                 </script>
             @endif
 
+            @if ($admin && ! $activity->recap_finalized_at && $activity->committeeMembers->isNotEmpty())
+                <form method="POST" action="{{ route('activities.committee.head', $activity) }}" class="grid gap-3 border-t border-cream-200 px-4 py-4 sm:grid-cols-3">
+                    @csrf
+                    @method('PUT')
+                    <div class="sm:col-span-1">
+                        <label for="head_position_id" class="label">Jabatan (divisi)</label>
+                        <select id="head_position_id" name="committee_position_id" class="input" required>
+                            <option value="">Pilih jabatan</option>
+                            @foreach ($positions as $position)
+                                @if ($activity->committeeMembers->where('committee_position_id', $position->id)->isNotEmpty())
+                                    <option value="{{ $position->id }}">{{ $position->name }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <label for="head_user_id_select" class="label">Kepala Divisi (Kadiv)</label>
+                        <select id="head_user_id_select" name="head_user_id" class="input">
+                            <option value="">Tanpa Kadiv</option>
+                        </select>
+                    </div>
+                    <div class="flex items-end">
+                        <button class="btn btn-secondary w-full">Ganti Kadiv</button>
+                    </div>
+                </form>
+                <script>
+                    (function () {
+                        const posSelect = document.getElementById('head_position_id');
+                        const headSelect = document.getElementById('head_user_id_select');
+                        if (!posSelect || !headSelect) return;
+                        const membersByPos = {
+                            @foreach ($activity->committeeMembers->groupBy('committee_position_id') as $posId => $members)
+                            {{ $posId }}: [
+                                @foreach ($members as $m)
+                                { id: {{ $m->user_id }}, name: @json($m->user->name.' · '.$m->user->organizationalField?->code), isHead: {{ $m->is_head ? 'true' : 'false' }} },
+                                @endforeach
+                            ],
+                            @endforeach
+                        };
+                        function rebuildHead() {
+                            const posId = posSelect.value;
+                            const members = membersByPos[posId] || [];
+                            const current = headSelect.value;
+                            headSelect.innerHTML = '<option value="">Tanpa Kadiv</option>';
+                            members.forEach(m => {
+                                const opt = document.createElement('option');
+                                opt.value = m.id;
+                                opt.textContent = m.name + (m.isHead ? ' (Kadiv)' : '');
+                                if (String(m.id) === current || m.isHead) opt.selected = m.isHead && current === '';
+                                headSelect.appendChild(opt);
+                            });
+                            // keep selection if still present
+                            if (current && Array.from(headSelect.options).some(o => o.value === current)) {
+                                headSelect.value = current;
+                            }
+                        }
+                        posSelect.addEventListener('change', rebuildHead);
+                        // initial
+                        if (posSelect.value) rebuildHead();
+                    })();
+                </script>
+            @endif
+
             @if ($admin && ! $activity->recap_finalized_at && $activity->status !== \App\Enums\ActivityStatus::Completed && $activity->committeeMembers->isNotEmpty())
                 <form method="POST" action="{{ route('activities.committee.update', $activity) }}" class="grid gap-3 border-t border-cream-200 px-4 py-4 sm:grid-cols-3">
                     @csrf
